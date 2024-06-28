@@ -237,3 +237,94 @@ public void updateGameBoard()
       }
       return counter;
    }
+
+	public int countRight(int row, int col) 
+   {
+      int counter = 0;
+      int current = board [row][col];
+      boolean same = true;
+      while (same == true) 
+      {
+         try
+         {
+            if (board[row][col+1] == current) 
+            {
+               counter++;
+               current = board [row][col+1];
+               col++;
+               
+            
+            }
+            else 
+            {
+               same = false;
+            }
+         }
+         catch (ArrayIndexOutOfBoundsException e) 
+         {
+            same = false;
+         }
+      }
+      return counter;
+   }
+ 
+
+   public int countUp(int row, int col) 
+   {
+      int counter = 0;
+      int current = board [row][col];
+      boolean same = true;
+      
+      while (same == true) 
+      {
+         try
+         {
+            if (board[row-1][col] == current) 
+            {
+               counter++;
+               current = board [row-1][col];
+               row--;
+            
+            }
+            else 
+            
+               same = false;
+            }
+         }
+         catch (ArrayIndexOutOfBoundsException e) 
+         {
+            same = false;
+         }
+      }
+      return counter;
+   }
+
+   public int countDown(int row, int col) 
+   {
+      int counter = 0;
+      int current = board [row][col];
+      boolean same = true;
+      
+      while (same == true) 
+      {
+         try{
+            if (board[row + 1][col] == current) 
+            {
+               counter++;
+               current = board [row+1][col];
+               row++;
+            
+            }
+            else 
+            {
+               same = false;
+            }
+         }
+         catch (ArrayIndexOutOfBoundsException e) 
+         {
+            same = false;
+         }
+      } 
+      return counter;
+   }
+
