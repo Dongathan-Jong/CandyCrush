@@ -358,3 +358,83 @@ public void swapPieces (int row1, int col1, int row2, int col2)
          
       }
    }
+ public void markDeletePieceRight(int row, int col, int num) 
+   {
+      
+      for (int i = 1; i <= num; i++)
+      {
+         markDeletePiece(row, col+i);
+      }
+   public void markDeletePieceUp(int row, int col, int num) 
+   {
+    
+   
+      for (int i = 1; i <= num; i++)
+      {  
+         markDeletePiece(row-i, col);
+      }
+   }
+   public void markDeletePieceDown(int row, int col, int num) 
+   {
+      
+   
+      for (int i = 1; i <= num; i++) 
+      {
+         markDeletePiece(row+i, col);
+      }
+   }
+   public void updateBoard() 
+   {  
+      int counter = 0;
+      int lowestValue = 0;
+     
+      for (int i = 0; i < NUMROW; i++) 
+      {
+         for (int j = NUMCOL-1; j >= 0; j--) 
+         {
+            if (board[j][i] == EMPTY) 
+            {
+               counter++;
+               if (counter == 1) 
+               {
+                  lowestValue = j;
+               }
+            }
+         }
+         if (counter > 0) 
+         {
+            for (int j = lowestValue; j >= counter ; j--)
+            {
+               board[j][i] = board[j-counter][i];
+            }
+            for (int j = lowestValue - counter; j >= 0; j--) 
+            {
+               board[j][i] = EMPTY;
+            }
+         
+         }
+      
+         counter = 0;
+         lowestValue = 0;
+        
+      }
+     
+      for (int i = 0; i < NUMROW; i++) 
+      {
+         for (int j = 0; j < NUMCOL; j++) 
+         {
+            if (board[i][j] == EMPTY) 
+            {
+               board[i][j] = rn.nextInt(8 - 1);
+            }
+            unmarkPiece(i, j);
+         }
+      }
+      gui.setScore(score);
+      gui.setMoveLeft(movesLeft);
+     
+      if (movesLeft == 0)
+      {
+         endGame();
+      }
+   }
