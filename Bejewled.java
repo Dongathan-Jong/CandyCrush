@@ -328,3 +328,33 @@ public void updateGameBoard()
       return counter;
    }
 
+public void swapPieces (int row1, int col1, int row2, int col2) 
+   {
+      int temp = row1;
+      int temp2 = col1;
+      int temp3 = board [row1][col1];
+      board[row1][col1] = board[row2][col2];
+      board[row2][col2] = temp3;
+   }
+ 
+   public void markPiece (int row, int col) 
+   {
+      gui.highlightSlot(row, col, COLOUR_SELECT);
+   }
+   
+   public void unmarkPiece (int row, int col) 
+   {
+      gui.unhighlightSlot(row, col);
+   }
+   public void markDeletePiece (int row, int col) 
+   {
+      board[row][col] = EMPTY;
+   }
+   public void markDeletePieceLeft (int row, int col, int num) {
+      
+      for (int i = 1; i < num; i++) 
+      {
+         gui.highlightSlot(row, col,COLOUR_DELETE);
+         
+      }
+   }
