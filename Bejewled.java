@@ -438,3 +438,55 @@ public void swapPieces (int row1, int col1, int row2, int col2)
          endGame();
       }
    }
+public boolean saveToFile(String fileName) 
+   {
+      String folder = GAMEFILEFOLDER + "/" + fileName;
+      try 
+      {
+         BufferedWriter writer = new BufferedWriter (new FileWriter (folder, false));
+         writer.write(score + "\n" + movesLeft + "\n");
+         
+         for (int i = 0; i < NUMROW; i++) 
+         {
+            for (int j = 0; j < NUMCOL; j++) 
+            {
+               writer.write(board[i][j] + " ");
+            }
+            writer.write("\n");
+         }
+         
+         writer.close();
+         return true;
+         
+      }
+      catch (IOException e) 
+      {
+         return false;
+      }
+   
+   }
+  
+   public boolean loadFromFile (String fileName){
+      try {
+         Scanner fs = new Scanner ((GAMEFILEFOLDER + "/" + fileName));
+         score = fs.nextInt();
+         movesLeft = fs.nextInt();
+         for (int i = 0; i < NUMROW; i++) 
+         {
+            for (int j = 0; j < NUMCOL; j++) 
+            {
+               board[i][j] = fs.nextInt();
+            }
+         }
+         
+         return true;
+      }
+      catch (NumberFormatException e)
+      {
+      
+         return false;
+      }
+   
+   
+   }
+}
