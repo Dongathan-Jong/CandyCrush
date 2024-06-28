@@ -168,3 +168,72 @@ public class Bejeweled
       }
    
    }
+public void updateGameBoard() 
+   {
+      for (int i = 0; i < NUMROW; i++) {
+         for (int j = 0; j < NUMCOL; j++) {
+            gui.setPiece(i,j, board[i][j]);
+         }
+      }
+   }
+
+   public void endGame() 
+   {
+      gui.showGameOverMessage(score, 10 - movesLeft);
+   }
+   
+   public void swapPiecesGUI(int row1, int col1, int row2, int col2) 
+   {
+      gui.setPiece(row1, col1, board[row2][col2]);
+      gui.setPiece(row2, col2, board[row1][col1]);
+   }
+   
+   public void initBoard() 
+   {
+      for (int i = 0; i < NUMROW; i++) {
+         for (int j = 0; j < NUMCOL; j++) {
+            board[i][j] = rn.nextInt(7 - 1);
+         }
+      }
+   }
+   public boolean adjacentSlots(int row1, int col1, int row2, int col2) 
+   {
+      if ((row2 == row1 - 1 || row2 == row1 + 1) && (col2 == col1) || (col2 == col1 - 1 || col2 == col1 + 1) && (row2 == row1)) 
+      {
+         return true;  
+      }
+      else 
+      {
+         return false;
+      }
+   
+   }
+  
+   public int countLeft(int row, int col) 
+   {
+      int counter = 1;
+      int current = board[row][col];
+      boolean same = true;
+      while (same == true) {
+         try
+         {
+            if (board[row][col-1] == current) 
+            {
+            
+               counter++;
+               current = board[row][col-1];
+               col--;
+            
+            }
+            else 
+            {
+               same = false;
+            }
+         }
+         catch (ArrayIndexOutOfBoundsException e) 
+         {
+            same = false;
+         }
+      }
+      return counter;
+   }
