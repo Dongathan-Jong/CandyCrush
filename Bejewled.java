@@ -1,18 +1,26 @@
+   
 import java.awt.Color;
 import java.io.*;
 import java.util.*;
 
-public class Bejeweled 
-{
+public class Bejeweled {
+
+   /* 
+	 * Constants
+	 */  
+   // colours used to mark the selected piece and 
+   // the pieces in the chain to be deleted
    final Color COLOUR_DELETE = Color.RED;
    final Color COLOUR_SELECT = Color.YELLOW;
 
    BejeweledGUI gui;
    
+   // declare all constants here
    final int EMPTY = -1;
    final int CHAIN_REQ = 3;
    final int NUMROW = 8, NUMCOL = 8;
    final String GAMEFILEFOLDER = "gamefiles";
+   // declare all "global" variables here
    boolean firstSelection;
    boolean chainMade, adjacentChainMade;
    int[][] board;
@@ -24,8 +32,9 @@ public class Bejeweled
  
  
 	
-      public Bejeweled(BejeweledGUI gui) {
-      this.gui = gui;  
+	      
+   public Bejeweled(BejeweledGUI gui) {
+      this.gui = gui;      
       start();   
    }
 
@@ -36,13 +45,13 @@ public class Bejeweled
       scoreTemp = 0;
       movesLeft = 10;
       
+      
       initBoard();
       updateBoard();
       updateGameBoard();
    }
 
-
-  public void play (int row, int column) 
+   public void play (int row, int column) 
    {
       
          
@@ -168,7 +177,8 @@ public class Bejeweled
       }
    
    }
-public void updateGameBoard() 
+
+   public void updateGameBoard() 
    {
       for (int i = 0; i < NUMROW; i++) {
          for (int j = 0; j < NUMCOL; j++) {
@@ -237,22 +247,22 @@ public void updateGameBoard()
       }
       return counter;
    }
-
-	public int countRight(int row, int col) 
+   
+  public int countRight(int row, int col) 
    {
-      int counter = 0;
+      int counter = 1;
       int current = board [row][col];
       boolean same = true;
       while (same == true) 
       {
          try
          {
-            if (board[row][col+1] == current) 
+            if (board[row][col] == current) 
             {
+            
                counter++;
                current = board [row][col+1];
                col++;
-               
             
             }
             else 
@@ -268,26 +278,26 @@ public void updateGameBoard()
       return counter;
    }
  
-
+  
    public int countUp(int row, int col) 
    {
-      int counter = 0;
+      int counter = 1;
       int current = board [row][col];
       boolean same = true;
-      
       while (same == true) 
       {
          try
          {
-            if (board[row-1][col] == current) 
+            if (board[row][col] == current) 
             {
+            
                counter++;
-               current = board [row-1][col];
+               current = board [row+1][col];
                row--;
             
             }
             else 
-            
+            {
                same = false;
             }
          }
@@ -298,37 +308,36 @@ public void updateGameBoard()
       }
       return counter;
    }
-
+ 
    public int countDown(int row, int col) 
    {
-      int counter = 0;
+      int counter = 1;
       int current = board [row][col];
-      boolean same = true;
-      
-      while (same == true) 
-      {
+      boolean same = false;
+      while (same == false) {
          try{
-            if (board[row + 1][col] == current) 
+            if (board[row][col] == current) 
             {
+            
                counter++;
-               current = board [row+1][col];
+               current = board [row-1][col];
                row++;
             
             }
             else 
             {
-               same = false;
+               same = true;
             }
          }
          catch (ArrayIndexOutOfBoundsException e) 
          {
             same = false;
          }
-      } 
+      }
       return counter;
    }
-
-public void swapPieces (int row1, int col1, int row2, int col2) 
+  
+   public void swapPieces (int row1, int col1, int row2, int col2) 
    {
       int temp = row1;
       int temp2 = col1;
@@ -350,43 +359,74 @@ public void swapPieces (int row1, int col1, int row2, int col2)
    {
       board[row][col] = EMPTY;
    }
-   public void markDeletePieceLeft (int row, int col, int num) {
+   public void markDeletePieceLeft (int row2, int col, int num) {
       
+      for (int i = 1; i < num; i++) 
+      {
+         gui.highlightSlot(row, col1,COLOUR_DELETE);
+         
+      }
+   }
+
+      
+
+      for (int i = 1; i < num; i++) 
+      {
+         board[row][col-i] = EMPTY;
+         
+      }
+   }
+ 
+   public void markDeletePieceRight(int row, int col, int num) 
+   {
       for (int i = 1; i < num; i++) 
       {
          gui.highlightSlot(row, col,COLOUR_DELETE);
          
       }
    }
- public void markDeletePieceRight(int row, int col, int num) 
-   {
-      
-      for (int i = 1; i <= num; i++)
+   
+      for (int i = 1; i < num; i++)
       {
-         markDeletePiece(row, col+i);
+         board[row][col+i] = EMPTY;
       }
+   }
+ 
    public void markDeletePieceUp(int row, int col, int num) 
    {
-    
-   
-      for (int i = 1; i <= num; i++)
-      {  
-         markDeletePiece(row-i, col);
+      for (int i = 1; i < num; i++) 
+      {
+         gui.highlightSlot(row, col,COLOUR_DELETE);
+         
       }
    }
+   
+      for (int i = 1; i < num; i++)
+      {
+         board[row+i][col] = Eempty;
+      }
+   }
+
    public void markDeletePieceDown(int row, int col, int num) 
    {
-      
-   
-      for (int i = 1; i <= num; i++) 
+      for (int i = 1; i < num; i++) 
       {
-         markDeletePiece(row+i, col);
+         gui.highlightSlot(row, col,COLOUR_DELETE);
+         
       }
    }
+   
+      for (int i = 1; i < num; i++) 
+      {
+         board[row-i][col] = EMPTY;
+      }
+   }
+  
    public void updateBoard() 
-   {  
+   {
       int counter = 0;
-      int lowestValue = 0;
+      int bottomyval = 0;
+     
      
       for (int i = 0; i < NUMROW; i++) 
       {
@@ -397,27 +437,29 @@ public void swapPieces (int row1, int col1, int row2, int col2)
                counter++;
                if (counter == 1) 
                {
-                  lowestValue = j;
+                  bottomyval = j;
                }
             }
          }
          if (counter > 0) 
          {
-            for (int j = lowestValue; j >= counter ; j--)
+            for (int j = bottomyval; j >= counter ; j--)
             {
                board[j][i] = board[j-counter][i];
             }
-            for (int j = lowestValue - counter; j >= 0; j--) 
+            for (int j = bottomyval - counter; j >= 0; j--) 
             {
                board[j][i] = EMPTY;
             }
          
          }
       
+        
          counter = 0;
-         lowestValue = 0;
+         bottomyval = 0;
         
       }
+     
      
       for (int i = 0; i < NUMROW; i++) 
       {
@@ -425,9 +467,8 @@ public void swapPieces (int row1, int col1, int row2, int col2)
          {
             if (board[i][j] == EMPTY) 
             {
-               board[i][j] = rn.nextInt(8 - 1);
+               board[i][j] = rn.nextInt(7 - 1);
             }
-            unmarkPiece(i, j);
          }
       }
       gui.setScore(score);
@@ -438,7 +479,8 @@ public void swapPieces (int row1, int col1, int row2, int col2)
          endGame();
       }
    }
-public boolean saveToFile(String fileName) 
+
+   public boolean saveToFile(String fileName) 
    {
       String folder = GAMEFILEFOLDER + "/" + fileName;
       try 
