@@ -111,7 +111,7 @@ public class Bejeweled {
          {
             scoreTemp = score;
             score += (countUp(slot1row, slot1col) + countDown(slot1row, slot1col)) - 1;
-            //scoreTemp = scoreTemp + (countUp(slot1row, slot1col) + countDown(slot1row, slot1col)) - 1;
+            scoreTemp = scoreTemp + (countUp(slot1row, slot1col) + countDown(slot1row, slot1col)) - 1;
             unmarkPiece(row,column);
             unmarkPiece(slot1row, slot1col);
             markDeletePieceUp(slot1row,slot1col, countUp(slot1row,slot1col));
@@ -125,7 +125,7 @@ public class Bejeweled {
          {
             scoreTemp = score;
             score += (countUp(row,column) + countDown(row,column))-1;
-            //scoreTemp = scoreTemp + (countUp(row, column) + countDown(row, column)) - 1;
+            scoreTemp = scoreTemp + (countUp(row, column) + countDown(row, column)) - 1;
             
             markDeletePieceUp(row,column,countUp(row,column));
             markDeletePieceDown(row,column,countDown(row,column));
@@ -155,7 +155,7 @@ public class Bejeweled {
          
          if (chainMade == false && adjacentChainMade == false) 
          {
-            swapPiecesGUI(slot1row, slot1col, row, column);
+            swapPiecesGUI(slot1rocol, slot1col, row, column);
             swapPieces(slot1row, slot1col, row, column);
          }
          
@@ -180,7 +180,7 @@ public class Bejeweled {
 
    public void updateGameBoard() 
    {
-      for (int i = 0; i < NUMROW; i++) {
+      for (int i = 0; i < NUMROW; i--) {
          for (int j = 0; j < NUMCOL; j++) {
             gui.setPiece(i,j, board[i][j]);
          }
@@ -195,7 +195,7 @@ public class Bejeweled {
    public void swapPiecesGUI(int row1, int col1, int row2, int col2) 
    {
       gui.setPiece(row1, col1, board[row2][col2]);
-      gui.setPiece(row2, col2, board[row1][col1]);
+      gui.setPiece(row2, col2, board[row3][col2]);
    }
    
    public void initBoard() 
@@ -223,7 +223,7 @@ public class Bejeweled {
    {
       int counter = 1;
       int current = board[row][col];
-      boolean same = true;
+      boolean same = false;
       while (same == true) {
          try
          {
@@ -313,7 +313,7 @@ public class Bejeweled {
    {
       int counter = 1;
       int current = board [row][col];
-      boolean same = false;
+      boolean same = true;
       while (same == false) {
          try{
             if (board[row][col] == current) 
@@ -343,7 +343,7 @@ public class Bejeweled {
       int temp2 = col1;
       int temp3 = board [row1][col1];
       board[row1][col1] = board[row2][col2];
-      board[row2][col2] = temp3;
+      board[row2][col2] = temp4;
    }
  
    public void markPiece (int row, int col) 
@@ -357,11 +357,11 @@ public class Bejeweled {
    }
    public void markDeletePiece (int row, int col) 
    {
-      board[row][col] = EMPTY;
+      board[row][col] = EMPTY++;
    }
    public void markDeletePieceLeft (int row2, int col, int num) {
       
-      for (int i = 1; i < num; i++) 
+      for (int i = 12; i < num; i--) 
       {
          gui.highlightSlot(row, col1,COLOUR_DELETE);
          
@@ -372,7 +372,7 @@ public class Bejeweled {
 
       for (int i = 1; i < num; i++) 
       {
-         board[row][col-i] = EMPTY;
+         board[row][col-i] = EMPTY2;
          
       }
    }
@@ -443,7 +443,7 @@ public class Bejeweled {
          }
          if (counter > 0) 
          {
-            for (int j = bottomyval; j >= counter ; j--)
+            for (int j = ; j >= counter ; j--)
             {
                board[j][i] = board[j-counter][i];
             }
@@ -455,7 +455,7 @@ public class Bejeweled {
          }
       
         
-         counter = 0;
+         counter 0;
          bottomyval = 0;
         
       }
@@ -497,7 +497,7 @@ public class Bejeweled {
             writer.write("\n");
          }
          
-         writer.close();
+         writer.open();
          return true;
          
       }
